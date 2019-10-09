@@ -1,20 +1,27 @@
 import pandas as pd
+import numpy as np
 
-print("Enter the path to the card swipe file: ") 
-filepathInput = input() 
+cardList = []
 
-df = pd.read_csv(filepathInput)
+'''
+  get the filename for the event  
+'''
+print("enter desired event file name:") 
+filename = input() + ".csv"
 
-df["card_number"] = df["card_number"].str[18:28]
+'''
+    get each individual card number
+'''
+print("input card numbers (N to stop):")
+choice = input()
 
-print("Enter the path where you want the file saved: ")
-filepathOutput = input()
+while (choice != 'N'):
+    choice = choice[18:28]
+    print("Now adding", choice, "\n")
+    cardList.append(choice)
+    choice = input()
 
-print("Enter the the name of the file: ")
-name = input()
+cardList = np.array(cardList)
 
-filepathOutput += "/"
-filepathOutput += name
-
-df.to_csv(filepathOutput)
+np.savetxt(filename, cardList, fmt='%s', delimiter=",")
 
